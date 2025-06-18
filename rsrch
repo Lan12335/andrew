@@ -1,0 +1,52 @@
+#include <AFMotor.h>
+
+AF_DCMotor M1(1);
+AF_DCMotor M2(2);
+AF_DCMotor M3(3);
+AF_DCMotor M4(4);
+
+int IRL;
+int IRR;
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(A0 ,INPUT);
+  pinMode(A1 ,INPUT);
+
+  M1.setSpeed(255);
+  M2.setSpeed(255);
+  M3.setSpeed(255);
+  M4.setSpeed(255);
+}
+
+void loop() {
+  IRL=digitalRead(A0);
+  IRR=digitalRead(A1);
+
+  if((IRL==1) && (IRR==1)) {
+    forward();
+  }
+
+  else{
+    stop();
+  }
+
+  Serial.println(IRL);
+  Serial.println(IRR);
+  delay(1000);
+}
+
+void forward() {
+    UL.run(FORWARD);
+    UR.run(FORWARD);
+    LL.run(FORWARD);        
+    LR.run(FORWARD);
+}
+
+void stop() {
+    M1.run(RELEASE);
+    M2.run(RELEASE);
+    M3.run(RELEASE);
+    M4.run(RELEASE);
+}
